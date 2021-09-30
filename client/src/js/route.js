@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Route } from "react-router";
 
-import Home from "./home";
+import Main from "./main";
 
 class AppRoute extends Component {
   render() {
@@ -12,7 +12,7 @@ class AppRoute extends Component {
         <main className="flex-shrink-0">
           <div className="container">
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Main} />
             </Switch>
           </div>
         </main>

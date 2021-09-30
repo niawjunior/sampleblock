@@ -11,25 +11,21 @@ import {
   Button,
   Row,
 } from "react-bootstrap";
-import "../css/home.css";
+import "../css/main.css";
 
-const Home = () => {
+const Main = () => {
   const [show, setShow] = useState(false);
   const [contents, setContents] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [clickContent, setClickontent] = useState(null);
+  const [clickContent, setClickContent] = useState(null);
   const [selectedContent, setSelectedContent] = useState(null);
-  const [conSent, setConSent] = useState(null);
 
   var sdk = new SDK(null, null, true); // 3rd argument true bypassing https requirement: not prod worthy
 
   useEffect(() => {
-    sdk.getData(function (data) {
-      setConSent(data?.mapsKey || "");
-      paintSettings();
-      paintEmail();
-    });
-  }, []);
+    paintSettings();
+    debounce(paintEmail, 500)();
+  }, [selectedContent]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -45,6 +41,10 @@ const Home = () => {
     }
   };
 
+  const paintSettings = () => {
+    //
+  };
+
   const fetchData = async () => {
     const response = await fetch(
       "https://cdx-cms.dev.depthcon1.com/consents?Type=TermAndConditionConsent"
@@ -54,13 +54,12 @@ const Home = () => {
   };
 
   const handleOnClick = (item) => {
-    setClickontent(item);
+    setClickContent(item);
   };
   const handleOnDoubleClick = (item) => {
-    setSelectedContent(item);
-    setConSent(item.Consent);
+    setClickContent(item);
+    setSelectedContent(item?.Consent);
     handleClose();
-    debounce(paintEmail, 500)();
   };
 
   const debounce = (func, wait, immediate) => {
@@ -80,11 +79,11 @@ const Home = () => {
   };
 
   const paintEmail = () => {
-    sdk.setContent(conSent);
+    sdk.setContent(selectedContent);
     sdk.setData({
-      mapsKey: conSent,
+      mapsKey: selectedContent,
     });
-    localStorage.setItem("consent", conSent);
+    localStorage.setItem("consent", selectedContent);
   };
 
   return (
@@ -187,4 +186,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Main;
