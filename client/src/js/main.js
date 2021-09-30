@@ -23,8 +23,10 @@ const Main = () => {
   var sdk = new SDK(null, null, true); // 3rd argument true bypassing https requirement: not prod worthy
 
   useEffect(() => {
-    paintSettings();
-    debounce(paintEmail, 500)();
+    if (selectedContent) {
+      paintSettings();
+      debounce(paintEmail, 500)();
+    }
   }, [selectedContent]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
