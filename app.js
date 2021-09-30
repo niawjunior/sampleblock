@@ -13,7 +13,7 @@ const root = path.join(__dirname, "client", "build");
 var app = express();
 
 app.set("port", process.env.PORT || 3333);
-app.use(favicon(__dirname + "/public/images/favicon.png"));
+app.use(favicon(__dirname + "/client/public/favicon.png"));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(

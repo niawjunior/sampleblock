@@ -11,12 +11,13 @@ import {
   Button,
   Row,
 } from "react-bootstrap";
-import "./style.css";
+import "../css/home.css";
 
 const Home = () => {
   const [show, setShow] = useState(false);
   const [contents, setContents] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [clickContent, setClickontent] = useState(null);
   const [selectedContent, setSelectedContent] = useState(null);
   const [conSent, setConSent] = useState(null);
 
@@ -34,10 +35,14 @@ const Home = () => {
 
   const openModal = async () => {
     setLoading(true);
-    const response = await fetchData();
-    setLoading(false);
-    setContents(response);
-    handleShow();
+    try {
+      const response = await fetchData();
+      setContents(response);
+      handleShow();
+    } catch (e) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchData = async () => {
@@ -48,17 +53,12 @@ const Home = () => {
     return mapResponseToJson;
   };
 
-  const handleSelectedContent = (item) => {
-    if (item?.id == selectedContent?.id) {
-      setSelectedContent(null);
-      setConSent(null);
-    } else {
-      setSelectedContent(item);
-      setConSent(item.Consent);
-    }
+  const handleOnClick = (item) => {
+    setClickontent(item);
   };
-
-  const handleOnSelectContent = () => {
+  const handleOnDoubleClick = (item) => {
+    setSelectedContent(item);
+    setConSent(item.Consent);
     handleClose();
     debounce(paintEmail, 500)();
   };
@@ -89,39 +89,38 @@ const Home = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center items-center vh-100 align-items-center">
-        <Col
-          className="d-flex justify-content-center"
-          xs={4}
-          md={4}
-          lg={4}
-          xl={4}
-        >
-          <Card className="custom-card">
-            <Card.Body>
-              <h6 className="card-title">Select a Content from CMS</h6>
-              <Button
-                className="mt-4"
-                onClick={!isLoading ? openModal : null}
-                variant="primary"
-                disabled={isLoading}
-              >
-                {isLoading ? "Loading…" : "Browse"}
-              </Button>
-              <div>
-                <h6 className="mt-4 text-break">{selectedContent?.Name}</h6>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+      <div className="d-flex justify-content-center">
+        {!selectedContent ? (
+          <Col
+            className="d-flex justify-content-center"
+            xs={4}
+            md={4}
+            lg={4}
+            xl={4}
+          >
+            <Card className="custom-card">
+              <Card.Body>
+                <h6 className="card-title">Select a Content from CMS</h6>
+                <Button
+                  className="mt-4"
+                  onClick={!isLoading ? openModal : null}
+                  variant="primary"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Loading…" : "Browse"}
+                </Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        ) : (
+          <div></div>
+        )}
       </div>
       <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>Select a File</Modal.Title>
@@ -151,19 +150,18 @@ const Home = () => {
             {contents.map((item) => {
               return (
                 <Col
-                  onClick={() => handleSelectedContent(item)}
+                  onClick={() => handleOnClick(item)}
+                  onDoubleClick={() => handleOnDoubleClick(item)}
                   key={item.id}
-                  xs={6}
-                  md={6}
-                  lg={6}
-                  xl={6}
+                  xs={3}
+                  md={3}
+                  lg={3}
+                  xl={3}
                   className={"p-2 d-flex"}
                 >
                   <Card
-                    className={
-                      "custom-file-content" +
-                      (selectedContent?.id === item.id ? " content-active" : "")
-                    }
+                    border={clickContent?.id === item.id ? "primary" : "light"}
+                    className={"custom-file-content"}
                   >
                     <img
                       src="https://scbcare.scb.co.th/assets/images/services/scb-care-team.jpg"
@@ -181,9 +179,6 @@ const Home = () => {
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleOnSelectContent}>
-            Select
-          </Button>
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>

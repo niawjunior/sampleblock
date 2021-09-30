@@ -1,4 +1,10 @@
-/* @import "https://cdnjs.cloudflare.com/ajax/libs/design-system/2.5.0/styles/salesforce-lightning-design-system.min.css"; */
+@import "../fonts/font.css";
+
+*,
+html,
+body {
+  font-family: "SalesforceSans-Regular", Fallback, sans-serif !important;
+}
 .custom-card {
   min-height: 200px;
   display: flex;
@@ -24,6 +30,10 @@
   overflow: auto;
 }
 
-.content-active {
-  border: 1px solid #2699fb;
+.fade.modal.show {
+  background: white !important;
+}
+
+.files-content {
+  flex-wrap: nowrap;
 }

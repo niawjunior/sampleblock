@@ -5,9 +5,7 @@
   "dependencies": {
     "express": "*",
     "method-override": "*",
-    "morgan": "*",
-    "serve-favicon": "*",
-    "stylus": "*"
+    "morgan": "*"
   },
   "engines": {
     "node": "*",

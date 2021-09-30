@@ -3,11 +3,9 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { Route } from "react-router";
 
-import Home from "./components/Home";
+import Home from "./home";
 
-import "./App.css";
-
-class App extends Component {
+class AppRoute extends Component {
   render() {
     return (
       <Router>
@@ -23,4 +21,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default AppRoute;
