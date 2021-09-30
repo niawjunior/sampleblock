@@ -9,7 +9,7 @@ var express = require("express"),
   logger = require("morgan"),
   methodOverride = require("method-override");
 
-const root = require("path").join(__dirname, "client", "build");
+const root = path.join(__dirname, "client", "build");
 var app = express();
 
 app.set("port", process.env.PORT || 3333);
@@ -30,8 +30,12 @@ if (app.get("env") == "development") {
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.use(express.static(root));
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile("index.html", { root });
+});
+
+app.get("/api", (req, res) => {
+  res.send("Hello World!");
 });
 
 http.createServer(app).listen(app.get("port"), function () {

@@ -6,7 +6,6 @@
     "express": "*",
     "method-override": "*",
     "morgan": "*",
-    "pug": "*",
     "serve-favicon": "*",
     "stylus": "*"
   },
