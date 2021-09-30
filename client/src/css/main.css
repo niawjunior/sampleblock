@@ -30,7 +30,8 @@ body {
   overflow: auto;
 }
 
-.fade.modal.show {
+.fade.modal.show,
+.fade.modal {
   background: white !important;
 }
 
