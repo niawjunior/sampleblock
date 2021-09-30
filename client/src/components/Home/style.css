@@ -1,0 +1,29 @@
+/* @import "https://cdnjs.cloudflare.com/ajax/libs/design-system/2.5.0/styles/salesforce-lightning-design-system.min.css"; */
+.custom-card {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  min-width: 300px;
+}
+
+.custom-file-content {
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+.custom-file-content:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+.modal-dialog {
+  overflow-x: auto;
+}
+
+.modal-body {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.content-active {
+  border: 1px solid #2699fb;
+}
